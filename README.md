@@ -4,14 +4,13 @@ Stealth bash shell listener. Differerent approach for keylogging with bash
 
 
 
-	🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
+	
 
-| *Under construction*.  |
+| 🚧🚧*Under construction*.🚧🚧  |
 |:------------------------------------------------------------------------------------------------------------------:|
 ***Just for educational purposes, do not use it if against someone in real-life if you do not have permission***|
 |*Any idea, criticism, contribution is welcome*|
 
-	🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
 	
 
 ##  Table of contents
