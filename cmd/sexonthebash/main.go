@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
 )
@@ -17,23 +18,12 @@ import (
 //https://coderwall.com/p/zyxyeg/golang-having-fun-with-os-stdin-and-shell-pipes
 //https://stackoverflow.com/questions/50788805/how-to-read-from-stdin-with-goroutines-in-golang
 
-func readStdin() {
-
-	fi, err := os.Stdin.Stat()
-	if err != nil {
-		panic(err)
-	}
-
-	for {
-		if fi.Size() > 0 {
-			fmt.Println("there is something to read")
-		}
-	}
-}
-
 func main() {
+	rescueStdout := os.Stdout
+	r, w, _ := os.Pipe()
+	os.Stdout = w
 	fmt.Println("before bash")
-	go readStdin()
+
 	bash := exec.Command("/bin/bash")
 	bash.Stderr = os.Stderr
 	bash.Stdout = os.Stdout
@@ -41,4 +31,9 @@ func main() {
 
 	bash.Run()
 	fmt.Println("after bash")
+	w.Close()
+	out, _ := ioutil.ReadAll(r)
+	os.Stdout = rescueStdout
+
+	fmt.Printf("Captured: %s", out)
 }
