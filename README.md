@@ -7,7 +7,11 @@ It provides 2 utilities imitating a shell to capture input and output:
  - `sexonthebash`: capture output of **bash** commands
  - `shellonthebeach`: capture input and output of **/bin/sh** command (the same thing as `sexonthebash` with more vodka)
 
- You are free to do what you want with these data afterwards (DNS exfiltration, etc):
+You are free to do what you want with these data afterwards (DNS exfiltration, etc).
+
+Could be used to:
+- spy on other users on the same machine, for CTF for example
+- get a `bin/sh` interactive (with arrow keys)
 	
 
 | 🚧🚧*Under construction*.🚧🚧  |
