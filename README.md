@@ -11,7 +11,7 @@ You are free to do what you want with these data afterwards (DNS exfiltration, e
 
 Could be used to:
 - spy on other users on the same machine, for CTF for example
-- get a `bin/sh` interactive (with arrow keys)
+- get an interactive `/bin/sh` interactive (ie. With arrow keys, backspace etc)
 	
 
 | 🚧🚧*Under construction*.🚧🚧  |
