@@ -1,5 +1,5 @@
 build.sexonthebash:
 	@echo "build in ${PWD}";go build -o sexonthebash cmd/sexonthebash/main.go
 
-run:
-	./run.sh
+build.shellonthebeach:
+	@echo "build in ${PWD}";go build -o shellonthebeach cmd/shellonthebeach/main.go

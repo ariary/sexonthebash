@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"shellonthebeach/pkg/command"
-	"shellonthebeach/pkg/shellonthebeach"
+	"sexonthebash/pkg/command"
+	"sexonthebash/pkg/shellonthebeach"
 )
 
 // see:
