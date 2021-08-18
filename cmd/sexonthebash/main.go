@@ -22,10 +22,10 @@ import (
 func main() {
 	fmt.Println("before bash")
 
-	bash := exec.Command("/bin/bash")
+	bash := exec.Command("/bin/bash", "-s")
 	var outBuffer bytes.Buffer
 	// var errBuffer bytes.Buffer
-	// var inBuffer bytes.Buffer
+	var inBuffer bytes.Buffer
 
 	mwOut := io.MultiWriter(os.Stdout, &outBuffer)
 	// mwErr := io.MultiWriter(os.Stderr, &errBuffer)
@@ -33,8 +33,8 @@ func main() {
 
 	bash.Stdout = mwOut
 	bash.Stderr = os.Stderr
-	bash.Stdin = os.Stdin
-	// bash.Stdin = io.TeeReader(os.Stdin, &inBuffer)
+	// bash.Stdin = os.Stdin
+	bash.Stdin = io.TeeReader(os.Stdin, &inBuffer)
 
 	bash.Run()
 
