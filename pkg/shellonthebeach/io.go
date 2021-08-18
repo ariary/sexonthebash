@@ -29,7 +29,20 @@ func GetCommand() (cmd string) {
 	}
 }
 
+func WriteCharAtIndex(str string, c rune, index int) (new string, err error) {
+	sz := len(str)
+	if index == sz {
+		new = str + string(c)
+
+	} else if index < sz {
+		new = str[:index] + string(c) + Dir[index:]
+	}
+
+	return new, fmt.Errorf("WriteCharAtIndex: Index out of range")
+}
+
 func GetCommandAndListenArrow() (cmd string) {
+	//keyboard listener
 	keysEvents, err := keyboard.GetKeys(10)
 	if err != nil {
 		panic(err)
@@ -37,6 +50,9 @@ func GetCommandAndListenArrow() (cmd string) {
 	defer func() {
 		_ = keyboard.Close()
 	}()
+
+	//For interativeness with arrow
+	index := 0 //writing position in cmd
 
 	for { //while(1)
 		event := <-keysEvents
@@ -58,15 +74,19 @@ func GetCommandAndListenArrow() (cmd string) {
 			space := " "
 			fmt.Print(space)
 			cmd += space
+			index += 1
 		case keyboard.KeyBackspace:
 			sz := len(cmd)
 			if sz > 2 {
 				cmd = cmd[:sz-1]
 				fmt.Printf("\r$ %s ", cmd) //does not handle multiple-line case)
+				index -= 1
 			}
 		// case keyboard.KeyArrowUp:
 		// case keyboard.KeyArrowDown:
-		// case keyboard.KeyArrowLeft:
+		case keyboard.KeyArrowLeft:
+			index -= 1
+			fmt.Printf("\r$ %s", cmd)
 		// case keyboard.KeyArrowRight:
 		default:
 			fmt.Printf("%s", string(event.Rune))
