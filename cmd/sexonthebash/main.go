@@ -1,8 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"os/exec"
 )
@@ -19,21 +20,32 @@ import (
 //https://stackoverflow.com/questions/50788805/how-to-read-from-stdin-with-goroutines-in-golang
 
 func main() {
-	rescueStdout := os.Stdout
-	r, w, _ := os.Pipe()
-	os.Stdout = w
+	// rescueStdout := os.Stdout
+	// r, w, _ := os.Pipe()
+	// os.Stdout = w
 	fmt.Println("before bash")
 
 	bash := exec.Command("/bin/bash")
+	// bash.Process.Kill()
+	var outBuffer bytes.Buffer
+	// var errBuffer bytes.Buffer
+	// var inBuffer bytes.Buffer
+
+	mwOut := io.MultiWriter(os.Stdout, &outBuffer)
+	// mwErr := io.MultiWriter(os.Stderr, &errBuffer)
+	// // mr := io.MultiReader(os.Stdin, &inBuffer)
+	bash.Stdout = mwOut
 	bash.Stderr = os.Stderr
-	bash.Stdout = os.Stdout
 	bash.Stdin = os.Stdin
 
 	bash.Run()
+	bash.Process.Kill()
 	fmt.Println("after bash")
-	w.Close()
-	out, _ := ioutil.ReadAll(r)
-	os.Stdout = rescueStdout
-
-	fmt.Printf("Captured: %s", out)
+	// // w.Close()
+	// // out, _ := ioutil.ReadAll(r)
+	// // os.Stdout = rescueStdout
+	// fmt.Println()
+	fmt.Println("Captured output", outBuffer.String())
+	// fmt.Println("Captured error", errBuffer.String())
+	// fmt.Println("Captured input", inBuffer.String())
 }
