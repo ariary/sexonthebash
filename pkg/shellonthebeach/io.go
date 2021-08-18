@@ -62,7 +62,7 @@ func GetCommandAndListenArrow() (cmd string) {
 			sz := len(cmd)
 			if sz > 2 {
 				cmd = cmd[:sz-1]
-				fmt.Printf("\r$ %s", cmd) //does not handle multiple-line case)
+				fmt.Printf("\r$ %s ", cmd) //does not handle multiple-line case)
 			}
 		// case keyboard.KeyArrowUp:
 		// case keyboard.KeyArrowDown:
