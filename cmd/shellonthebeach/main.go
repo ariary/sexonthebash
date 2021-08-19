@@ -13,7 +13,7 @@ import (
 func main() {
 	for {
 		shellonthebeach.Prefix()
-		cmd := shellonthebeach.GetCommand()
+		cmd := shellonthebeach.GetCommandInteractive()
 		command.ManageSpecialCase(cmd)
 		output := command.Exec(cmd)
 		fmt.Println(output)

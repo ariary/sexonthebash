@@ -11,7 +11,7 @@ import (
 
 const prefix = "$ "
 
-//Get command from user input
+// Get the command and args from user input
 func GetCommand() (cmd string) {
 	for {
 		buf := bufio.NewReader(os.Stdin)
@@ -35,13 +35,32 @@ func WriteCharAtIndex(str string, c rune, index int) (new string, err error) {
 		new = str + string(c)
 
 	} else if index < sz {
-		new = str[:index] + string(c) + Dir[index:]
+		new = str[:index] + string(c) + str[index:]
 	}
 
 	return new, fmt.Errorf("WriteCharAtIndex: Index out of range")
 }
 
-func GetCommandAndListenArrow() (cmd string) {
+//Return the last character of a string.
+func GetLastCharacter(str string) string {
+	sz := len(str)
+	if sz > 0 {
+		return str[sz-1:]
+	}
+	return ""
+}
+
+//Return the first character of a string.
+func GetFirstCharacter(str string) string {
+	sz := len(str)
+	if sz > 0 {
+		return str[:1]
+	}
+	return ""
+}
+
+// Get the command and args from user input + interactive behiviour ie react with arrow key stroke, backspace
+func GetCommandInteractive() (cmd string) {
 	//keyboard listener
 	keysEvents, err := keyboard.GetKeys(10)
 	if err != nil {
@@ -51,8 +70,13 @@ func GetCommandAndListenArrow() (cmd string) {
 		_ = keyboard.Close()
 	}()
 
-	//For interativeness with arrow
-	index := 0 //writing position in cmd
+	//For interativeness with lateral movement with arrow
+	var cmdRight string
+
+	//For multipleline printing
+	var multipleline bool
+	var line string
+	var lineRight string
 
 	for { //while(1)
 		event := <-keysEvents
@@ -61,35 +85,66 @@ func GetCommandAndListenArrow() (cmd string) {
 		}
 		switch event.Key {
 		case keyboard.KeyEnter:
-			if !strings.HasSuffix(cmd, "\\") { //just check if cmdline does not finish with \
+			//Enter: Validate command Or continue if it ends w/ '\'
+			if !strings.HasSuffix(cmd, "\\") { //check if cmdline does not finish with '\'
 				fmt.Println()
-				return cmd
+				return cmd + cmdRight
 			} else {
 				//Multiple-line command
 				fmt.Println()
 				cmd = strings.Trim(cmd, "\\")
+				multipleline = true
 			}
 		case keyboard.KeySpace:
 			//event.Rune for space could be x00 => error
 			space := " "
 			fmt.Print(space)
 			cmd += space
-			index += 1
 		case keyboard.KeyBackspace:
+			//delete one character
 			sz := len(cmd)
 			if sz > 2 {
 				cmd = cmd[:sz-1]
-				fmt.Printf("\r$ %s ", cmd) //does not handle multiple-line case)
-				index -= 1
+				if multipleline {
+					fmt.Printf("\r%s ", line)
+				} else {
+					fmt.Printf("\r%s%s ", prefix, cmd)
+				}
 			}
 		// case keyboard.KeyArrowUp:
 		// case keyboard.KeyArrowDown:
 		case keyboard.KeyArrowLeft:
-			index -= 1
-			fmt.Printf("\r$ %s", cmd)
-		// case keyboard.KeyArrowRight:
+			//Shift writing place to the left + adapt printing
+			//does not handle multipleline
+			last := GetLastCharacter(cmd)
+			cmd = strings.TrimSuffix(cmd, last)
+			cmdRight = last + cmdRight
+			if multipleline {
+				line = strings.TrimSuffix(line, last)
+				lineRight = last + lineRight
+				fmt.Printf("\r%s", line)
+			} else {
+				fmt.Printf("\r%s%s", prefix, cmd) //shift writing index by one
+			}
+		case keyboard.KeyArrowRight:
+			//Shift writing place to the left + adapt printing
+			first := GetFirstCharacter(cmdRight)
+			cmdRight = strings.TrimPrefix(cmdRight, first)
+			cmd += first
+			if multipleline {
+				lineRight = strings.TrimPrefix(lineRight, first)
+				fmt.Printf("\r%s", line) //shift writing index by ones
+			} else {
+				fmt.Printf("\r%s%s", prefix, cmd) //shift writing index by ones
+			}
 		default:
-			fmt.Printf("%s", string(event.Rune))
+			//Write onecharacter
+			if multipleline {
+				fmt.Printf("\r%s%s%s", line, string(event.Rune), lineRight)
+				line += string(event.Rune)
+			} else {
+				fmt.Printf("\r%s%s%s%s", prefix, cmd, string(event.Rune), cmdRight)
+			}
 			cmd += string(event.Rune)
 		}
 	}
