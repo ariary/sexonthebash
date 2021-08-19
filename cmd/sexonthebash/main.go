@@ -20,7 +20,7 @@ import (
 //https://stackoverflow.com/questions/50788805/how-to-read-from-stdin-with-goroutines-in-golang
 
 func main() {
-	fmt.Println("before bash")
+	fmt.Println("Before bash")
 
 	bash := exec.Command("/bin/bash", "-s")
 	var outBuffer bytes.Buffer
@@ -28,19 +28,19 @@ func main() {
 	var inBuffer bytes.Buffer
 
 	mwOut := io.MultiWriter(os.Stdout, &outBuffer)
+	io.TeeReader(os.Stdin, &inBuffer)
 	// mwErr := io.MultiWriter(os.Stderr, &errBuffer)
 	// mrIn := io.MultiReader(os.Stdin, &inBuffer)
 
 	bash.Stdout = mwOut
 	bash.Stderr = os.Stderr
-	// bash.Stdin = os.Stdin
-	bash.Stdin = io.TeeReader(os.Stdin, &inBuffer)
+	bash.Stdin = os.Stdin
 
 	bash.Run()
 
 	fmt.Println()
-	fmt.Println("after bash")
+	fmt.Println("After bash")
 	fmt.Println("Captured output", outBuffer.String())
 	// fmt.Println("Captured error", errBuffer.String())
-	// fmt.Println("Captured input", inBuffer.String())
+	fmt.Println("Captured input", inBuffer.String())
 }
