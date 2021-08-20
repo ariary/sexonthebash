@@ -4,8 +4,8 @@
 Stealth shell input and output listeners. Differerent approach for keylogging with Shell. 
 
 It provides 2 utilities imitating a shell to capture input and output:
- - `sexonthebash`: capture output of **bash** commands
- - `shellonthebeach`: capture input and output of **/bin/sh** command (the same thing as `sexonthebash` with more vodka)
+ - `sexonthebash`: capture output and input of **bash** commands
+ - `shellonthebeach`: capture input and output of **/bin/sh** command (the same thing as `sexonthebash` with less vodka)
 
 You are free to do what you want with these data afterwards (DNS exfiltration, etc).
 
@@ -69,7 +69,7 @@ Launch it, and exec your usual shell commands. If you see nothing suspect it is 
 
 ### sexontheBash
 
- Two important aspect of a BASH are **the prompt string** and its **interactiveness**. By piping `os.Stdin` we couldn't have these two features (=> we could never lure someone onthinking he is on a bash session so). This is why we only capture `os.Stdout`
+The command is repeated in the output
 
 ### shellonthebeach
 
