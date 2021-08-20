@@ -4,42 +4,66 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"os/exec"
+	"os/signal"
+	"syscall"
+
+	"github.com/creack/pty"
 )
 
-//go routine which read stdin permently (and print it for now);
-// Maybe use mutex, safe read to avoid race condition
-// Once it is ok the same thing for stdout
+// func test() (in string, out string, err error) {
+// 	// Create arbitrary command.
 
-// see:
-//https://eli.thegreenplace.net/2020/faking-stdin-and-stdout-in-go/
-//StdinPipe for exec command
-//https://zetcode.com/golang/pipe/
-//https://coderwall.com/p/zyxyeg/golang-having-fun-with-os-stdin-and-shell-pipes
-//https://stackoverflow.com/questions/50788805/how-to-read-from-stdin-with-goroutines-in-golang
+// 	return mw
+// }
 
 func main() {
-	fmt.Println("Before bash")
+	fmt.Println("before bash")
+	c := exec.Command("bash")
 
-	bash := exec.Command("/bin/bash", "-s")
+	// Start the command with a pty.
+	ptmx, err := pty.Start(c)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// Make sure to close the pty at the end.
+	defer func() { _ = ptmx.Close() }() // Best effort.
+
+	// Handle pty size.
+	ch := make(chan os.Signal, 1)
+	signal.Notify(ch, syscall.SIGWINCH)
+	go func() {
+		for range ch {
+			if err := pty.InheritSize(os.Stdin, ptmx); err != nil {
+				log.Printf("error resizing pty: %s", err)
+			}
+		}
+	}()
+	ch <- syscall.SIGWINCH                        // Initial resize.
+	defer func() { signal.Stop(ch); close(ch) }() // Cleanup signals when done.
+
+	// // Set stdin in raw mode.
+	// oldState, err := term.MakeRaw(int(os.Stdin.Fd()))
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer func() { _ = term.Restore(int(os.Stdin.Fd()), oldState) }() // Best effort.
+
+	// Copy stdin to the pty and the pty to stdout.
+	// NOTE: The goroutine will keep reading until the next keystroke before returning.
+
 	var outBuffer bytes.Buffer
 	// var errBuffer bytes.Buffer
 	var inBuffer bytes.Buffer
 
 	mwOut := io.MultiWriter(os.Stdout, &outBuffer)
-	io.TeeReader(os.Stdin, &inBuffer)
-	// mwErr := io.MultiWriter(os.Stderr, &errBuffer)
-	// mrIn := io.MultiReader(os.Stdin, &inBuffer)
+	in := io.TeeReader(os.Stdin, &inBuffer)
+	go func() { _, _ = io.Copy(ptmx, in) }()
+	_, _ = io.Copy(mwOut, ptmx)
 
-	bash.Stdout = mwOut
-	bash.Stderr = os.Stderr
-	bash.Stdin = os.Stdin
-
-	bash.Run()
-
-	fmt.Println()
-	fmt.Println("After bash")
+	fmt.Println("after bash")
 	fmt.Println("Captured output", outBuffer.String())
 	// fmt.Println("Captured error", errBuffer.String())
 	fmt.Println("Captured input", inBuffer.String())
