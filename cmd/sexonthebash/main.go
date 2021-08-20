@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -26,10 +25,8 @@ func main() {
 	c := exec.Command("bash")
 
 	// Start the command with a pty.
-	ptmx, err := pty.Start(c)
-	if err != nil {
-		log.Fatal(err)
-	}
+	ptmx, _ := pty.Start(c)
+
 	// Make sure to close the pty at the end.
 	defer func() { _ = ptmx.Close() }() // Best effort.
 
@@ -38,24 +35,18 @@ func main() {
 	signal.Notify(ch, syscall.SIGWINCH)
 	go func() {
 		for range ch {
-			if err := pty.InheritSize(os.Stdin, ptmx); err != nil {
-				log.Printf("error resizing pty: %s", err)
-			}
+			pty.InheritSize(os.Stdin, ptmx)
 		}
 	}()
 	ch <- syscall.SIGWINCH                        // Initial resize.
 	defer func() { signal.Stop(ch); close(ch) }() // Cleanup signals when done.
 
 	// Set stdin in raw mode.
-	oldState, err := term.MakeRaw(int(os.Stdin.Fd()))
-	if err != nil {
-		panic(err)
-	}
+	oldState, _ := term.MakeRaw(int(os.Stdin.Fd()))
 	defer func() { _ = term.Restore(int(os.Stdin.Fd()), oldState) }() // Best effort.
 
 	// Copy stdin to the pty and the pty to stdout.
 	// NOTE: The goroutine will keep reading until the next keystroke before returning.
-
 	var outBuffer bytes.Buffer
 	var inBuffer bytes.Buffer
 
