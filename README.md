@@ -14,10 +14,6 @@ Could be used to:
 - get an interactive `/bin/sh` interactive (ie. With arrow keys, backspace etc)
 	
 
-| ***Just for educational purposes, do not use it if against someone in real-life if you do not have permission*** |
-|:------------------------------------------------------------------------------------------------------------------:|
-|*Any idea, criticism, contribution is welcome*|
-
 	
 
 ##  Table of contents
@@ -26,7 +22,11 @@ Could be used to:
  - [💺 Installation](#-installation)
  - [🚀 Usage](#-usage)
  - [💭Limits/improvements](#limitsimprovements)
-	
+
+| ***Just for educational purposes, do not use it if against someone in real-life if you do not have permission*** |
+|:------------------------------------------------------------------------------------------------------------------:|
+|*Any idea, criticism, contribution is welcome*|
+
 ## 🔦 Idea
 
 Provide a different approach for keylogging (log only command on `bash.`/`sh`). But some juicy information could be grabbed from it.
