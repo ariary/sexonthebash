@@ -16,7 +16,6 @@ Could be used to:
 
 | ***Just for educational purposes, do not use it if against someone in real-life if you do not have permission*** |
 |:------------------------------------------------------------------------------------------------------------------:|
-|
 |*Any idea, criticism, contribution is welcome*|
 
 	
