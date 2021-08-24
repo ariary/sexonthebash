@@ -14,9 +14,9 @@ Could be used to:
 - get an interactive `/bin/sh` interactive (ie. With arrow keys, backspace etc)
 	
 
-| 🚧🚧*Under construction*.🚧🚧  |
+| ***Just for educational purposes, do not use it if against someone in real-life if you do not have permission*** |
 |:------------------------------------------------------------------------------------------------------------------:|
-***Just for educational purposes, do not use it if against someone in real-life if you do not have permission***|
+|
 |*Any idea, criticism, contribution is welcome*|
 
 	
@@ -65,7 +65,7 @@ Launch it, and exec your usual shell commands. If you see nothing suspect it is 
 
 ## 💭Limits/improvements
 
-📬 **Please tell me if you see some bugs,improvments etc!** (with issue, PR etc)
+📬 **Please tell me if you see some bugs,improvements etc!** (with issue, PR etc)
 
 ### sexontheBash
 
