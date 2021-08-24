@@ -11,9 +11,10 @@ import (
 
 //Error handling for debug purpose. To be stealthed withdraw them
 func main() {
+	var historic shellonthebeach.Historic
 	for {
 		shellonthebeach.Prefix()
-		cmd := shellonthebeach.GetCommandInteractive()
+		cmd := shellonthebeach.GetCommandInteractive(&historic)
 		command.ManageSpecialCase(cmd)
 		output := command.Exec(cmd)
 		fmt.Println(output)

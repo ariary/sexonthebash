@@ -60,7 +60,7 @@ func GetFirstCharacter(str string) string {
 }
 
 // Get the command and args from user input + interactive behiviour ie react with arrow key stroke, backspace
-func GetCommandInteractive() (cmd string) {
+func GetCommandInteractive(historic *Historic) (cmd string) {
 	//keyboard listener
 	keysEvents, err := keyboard.GetKeys(10)
 	if err != nil {
@@ -88,7 +88,9 @@ func GetCommandInteractive() (cmd string) {
 			//Enter: Validate command Or continue if it ends w/ '\'
 			if !strings.HasSuffix(cmd, "\\") { //check if cmdline does not finish with '\'
 				fmt.Println()
-				return cmd + cmdRight
+				fullCmd := cmd + cmdRight
+				historic.Add(fullCmd)
+				return fullCmd
 			} else {
 				//Multiple-line command
 				fmt.Println()
@@ -111,8 +113,21 @@ func GetCommandInteractive() (cmd string) {
 					fmt.Printf("\r%s%s ", prefix, cmd)
 				}
 			}
-		// case keyboard.KeyArrowUp:
-		// case keyboard.KeyArrowDown:
+		case keyboard.KeyArrowUp:
+			//get previous command
+			previous := historic.GetPrevious()
+			if previous != "" {
+				cmd = previous
+				cmdRight = ""
+				fmt.Printf("\r%s%s", prefix, previous)
+			}
+		case keyboard.KeyArrowDown:
+			next := historic.GetNext()
+			if next != "" {
+				cmd = next
+				cmdRight = ""
+				fmt.Printf("\r%s%s", prefix, next)
+			}
 		case keyboard.KeyArrowLeft:
 			//Shift writing place to the left + adapt printing
 			//does not handle multipleline

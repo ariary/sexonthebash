@@ -66,10 +66,6 @@ Launch it, and exec your usual shell commands. If you see nothing suspect it is 
 
 📬 **Please tell me if you see some bugs,improvements etc!** (with issue, PR etc)
 
-### sexontheBash
-
-The command is repeated in the output
-
 ### shellonthebeach
 
 The command outputs are not printing in real-time
