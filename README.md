@@ -29,7 +29,7 @@ Could be used to:
 
 ## 🔦 Idea
 
-Provide a different approach for keylogging (log only command on `bash.`/`sh`). But some juicy information could be grabbed from it.
+Provide a different approach for keylogging (log only command on `bash`/`sh`). But some juicy information could be grabbed from it.
 
 The aim of `sexonthebash` is to be launched under a bash session by any means and to imitate bash behaviour to lure the victim in a way that the victim doesn't feel like they're somewhere other than a bash session.
 
@@ -69,3 +69,7 @@ Launch it, and exec your usual shell commands. If you see nothing suspect it is 
 ### shellonthebeach
 
 The command outputs are not printing in real-time
+
+### sexonthebash
+
+Be able to store (or send to a remote place) the captured output and input in a near real time (ie. A way to not waiting anymore that the user has finished his bash session to get those data)
