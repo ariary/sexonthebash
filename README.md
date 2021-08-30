@@ -72,7 +72,7 @@ In a bash session:
 ```
 ./stealth_bash.sh
 ```
-Launch the command `exit` to exit the listener and find the log in `.input.log` and `output.log`
+Launch the command `exit` to exit the listener and find the log in `.input.log` and `.output.log`
 
 ### Launch shellonthebeach
 In a sh session:
