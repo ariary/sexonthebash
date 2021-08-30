@@ -60,7 +60,19 @@ make before.build
 
 Launch it, and exec your usual shell commands. If you see nothing suspect it is perfect.
 
+### Launch sexonthebash
+In a bash session:
+```
+./stealth_bash.sh
+```
+Launch the command `exit` to exit the listener and find the log in `.input.log` and `output.log`
 
+### Launch shellonthebeach
+In a sh session:
+```
+./stealth_shell.sh
+```
+Launch the command `exit` to exit the listener. Nothing is done with captured commands from now
 
 ## 💭Limits/improvements
 
@@ -68,7 +80,8 @@ Launch it, and exec your usual shell commands. If you see nothing suspect it is 
 
 ### shellonthebeach
 
-The command outputs are not printing in real-time
+- The command outputs are not printing in real-time
+- Nothing is done with captured commands
 
 ### sexonthebash
 
