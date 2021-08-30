@@ -4,8 +4,8 @@
 <div align=center>
 
 <hr size=15px color="ff5733" width=75%>
-
-<h3><i>🍾TL;DR🧊</i></h3>
+🍾🧊
+<h3><i>TL;DR🧊</i></h3>
 No talks needed,  drinks are on me. I want to use it [<a href="#-usage">🚀</a>]
 
 <hr size=15px color="ff5733" width=75%>
