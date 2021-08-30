@@ -21,13 +21,11 @@ Could be used to:
 
 
 <div align=center>
-<hr size=7px color="ff5733" width=75%>
+<hr size=15px color="ff5733" width=75%>
 <h2 >TL;DR</h2>
-Stop talking, I want to use it 🚀
-<hr size=7px color="ff5733" width=75%>
-<div>
-
-
+Stop talking, I want to use it [<a href="#-usage">🚀</a>]
+<hr size=15px color="ff5733" width=75%>
+</div>
 
 
 ## 🔦 Idea
