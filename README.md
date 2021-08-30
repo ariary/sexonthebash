@@ -18,19 +18,22 @@ Could be used to:
 |:------------------------------------------------------------------------------------------------------------------:|
 |*Any idea, criticism, contribution is welcome*|
 
-----
 
-<p align="center">
-<strong><a href="#-idea">🔦 Idea</a></strong>
-|
-<strong><a href="#-installation">💺 Installation</a></strong>
-|
-<strong><a href="#-usage">🚀 Usage</a></strong>
-|
-<strong><a href="#limitsimprovements">💭Limits/improvements</a></strong>
-</p>
+<style>
+/* Rounded border */  
+hr.rounded {  
+border-top: 8px solid #bbb;  
+border-radius: 5px;  
+}
+</style>
 
-----	
+<div align=center>
+<hr class="rounded">
+<h2 >TL;DR</h2>
+Stop talking, I want to use it 🚀
+<hr class="rounded">
+<div>
+
 
 
 
