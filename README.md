@@ -19,19 +19,12 @@ Could be used to:
 |*Any idea, criticism, contribution is welcome*|
 
 
-<style>
-/* Rounded border */  
-hr.rounded {  
-border-top: 8px solid #bbb;  
-border-radius: 5px;  
-}
-</style>
 
 <div align=center>
-<hr class="rounded">
+<hr size=7px color="ff5733" width=75%>
 <h2 >TL;DR</h2>
 Stop talking, I want to use it 🚀
-<hr class="rounded">
+<hr size=7px color="ff5733" width=75%>
 <div>
 
 
