@@ -39,7 +39,7 @@ Idem for `shellonthebeach`, to be launched in place of a `sh` tty
 
 ## 💺 Installation
 ### Download binary
-From [release](https://github.com/ariary/sexonthebash/releases) section
+From [releases](https://github.com/ariary/sexonthebash/releases) section
 
 ### From source
 #### Prerequisite
