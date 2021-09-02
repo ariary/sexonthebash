@@ -38,8 +38,11 @@ The aim of `sexonthebash` is to be launched under a bash session by any means an
 Idem for `shellonthebeach`, to be launched in place of a `sh` tty
 
 ## 💺 Installation
+### Download binary
+From (release)[https://github.com/ariary/sexonthebash/releases] section
 
-### Prerequisite
+### From source
+#### Prerequisite
 
  - golang installed
  - make installed
