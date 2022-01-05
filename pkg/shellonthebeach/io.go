@@ -60,6 +60,7 @@ func GetFirstCharacter(str string) string {
 }
 
 // Get the command and args from user input + interactive behiviour ie react with arrow key stroke, backspace
+//TODO: handle delete/suppr key
 func GetCommandInteractive(historic *Historic) (cmd string) {
 	//keyboard listener
 	keysEvents, err := keyboard.GetKeys(10)
