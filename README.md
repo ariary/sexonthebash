@@ -13,7 +13,7 @@ No talks needed,  drinks are on me. I want to use it [<a href="#-usage">🚀</a>
 Stealth shell input and output listeners. Differerent approach for keylogging with Shell. 
 
 It provides 2 utilities imitating a shell to capture input and output:
- - `sexonthebash`: capture output and input of **bash** commands
+ - `sexonthebash`: capture output and input of **bash** commands (`script` equivalent)
  - `shellonthebeach`: capture input and output of **/bin/sh** command (the same thing as `sexonthebash` with less vodka)
 
 You are free to do what you want with these data afterwards (DNS exfiltration, etc).
